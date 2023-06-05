@@ -1,0 +1,15 @@
+FROM ubuntu:latest
+LABEL maitainer="geela.balakrishna@gmail.com"
+LABEL version="1.0.0"
+RUN echo "Hi, i am run - 1"
+RUN echo "Hi, i am run - 2"
+RUN echo "Hi, i am run - 3"
+CMD echo "Hi, i am CMD-1"
+CMD echo "Hi, i am CMD-2"
+CMD echo "Hi, i am CMD-3"
+
+
+#RUN instructions will execute while creating docker image
+#CMD instructions will execute while creating docker container
+#We can write multiple RUN instructions, docker engine will process from top to bottom
+#We can write multiple CMD instructions but docker engine will process only last CMD instruction.
