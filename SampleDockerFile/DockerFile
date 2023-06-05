@@ -9,7 +9,7 @@ CMD echo "Hi, i am CMD-2"
 CMD echo "Hi, i am CMD-3"
 
 
-
+#ENTRYPOINT ["executable", "arg1", "arg2", ...]
 #CMD instructions we can override while creating container
 #CMD ["executable", "arg1", "arg2", ...]
 #RUN instructions will execute while creating docker image
