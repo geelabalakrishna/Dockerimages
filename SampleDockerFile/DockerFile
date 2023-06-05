@@ -8,7 +8,7 @@ CMD echo "Hi, i am CMD-1"
 CMD echo "Hi, i am CMD-2"
 CMD echo "Hi, i am CMD-3"
 
-
+#CMD ["executable", "arg1", "arg2", ...]
 #RUN instructions will execute while creating docker image
 #CMD instructions will execute while creating docker container
 #We can write multiple RUN instructions, docker engine will process from top to bottom
