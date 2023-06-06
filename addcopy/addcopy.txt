@@ -1,0 +1,142 @@
+ADD or COPY
+Although ADD and COPY are functionally similar, generally speaking, COPY is preferred. 
+That’s because it’s more transparent than ADD. COPY only supports the basic copying of local files into the container,
+while ADD has some features (like local-only tar extraction and remote URL support) that are not immediately obvious. Consequently,
+the best use for ADD is local tar file auto-extraction into the image, as in ADD rootfs.tar.xz /.
+
+
+[root@ip-10-10-2-32 b]# docker build -t gbalakrishna/addcopy:v1 .
+Sending build context to Docker daemon  2.048kB
+Step 1/5 : FROM nginx
+latest: Pulling from library/nginx
+f03b40093957: Pull complete
+eed12bbd6494: Pull complete
+fa7eb8c8eee8: Pull complete
+7ff3b2b12318: Pull complete
+0f67c7de5f2c: Pull complete
+831f51541d38: Pull complete
+Digest: sha256:af296b188c7b7df99ba960ca614439c99cb7cf252ed7bbc23e90cfda59092305
+Status: Downloaded newer image for nginx:latest
+ ---> f9c14fe76d50
+Step 2/5 : ADD  https://www.free-css.com/assets/files/free-css-templates/download/page291/hightech.zip /tmp
+Downloading [==================================================>]  5.348MB/5.348MB
+
+ ---> bbdb24b16b4a
+Step 3/5 : RUN  apt-get update && apt-get install unzip
+ ---> Running in acc6dc5c8822
+Get:1 http://deb.debian.org/debian bullseye InRelease [116 kB]
+Get:2 http://deb.debian.org/debian-security bullseye-security InRelease [48.4 kB]
+Get:3 http://deb.debian.org/debian bullseye-updates InRelease [44.1 kB]
+Get:4 http://deb.debian.org/debian bullseye/main amd64 Packages [8183 kB]
+Get:5 http://deb.debian.org/debian-security bullseye-security/main amd64 Packages [245 kB]
+Get:6 http://deb.debian.org/debian bullseye-updates/main amd64 Packages [14.8 kB]
+Fetched 8650 kB in 2s (5511 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Suggested packages:
+  zip
+The following NEW packages will be installed:
+  unzip
+0 upgraded, 1 newly installed, 0 to remove and 2 not upgraded.
+Need to get 172 kB of archives.
+After this operation, 393 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian bullseye/main amd64 unzip amd64 6.0-26+deb11u1 [172 kB]
+debconf: delaying package configuration, since apt-utils is not installed
+Fetched 172 kB in 0s (8160 kB/s)
+Selecting previously unselected package unzip.
+(Reading database ... 7826 files and directories currently installed.)
+Preparing to unpack .../unzip_6.0-26+deb11u1_amd64.deb ...
+Unpacking unzip (6.0-26+deb11u1) ...
+Setting up unzip (6.0-26+deb11u1) ...
+Removing intermediate container acc6dc5c8822
+ ---> 32a5b76fd309
+Step 4/5 : RUN  unzip /tmp/hightech.zip
+ ---> Running in 2944c62945e1
+Archive:  /tmp/hightech.zip
+  inflating: hightech-html/about.html
+  inflating: hightech-html/contact.html
+   creating: hightech-html/css/
+  inflating: hightech-html/css/.DS_Store
+  inflating: hightech-html/css/bootstrap.css
+  inflating: hightech-html/css/bootstrap.min.css
+  inflating: hightech-html/css/font-awesome.min.css
+  inflating: hightech-html/css/jquery.mCustomScrollbar.min.css
+  inflating: hightech-html/css/owl.carousel.css
+  inflating: hightech-html/css/owl.carousel.min.css
+  inflating: hightech-html/css/owl.theme.default.css
+  inflating: hightech-html/css/owl.theme.default.min.css
+  inflating: hightech-html/css/owl.theme.green.css
+  inflating: hightech-html/css/owl.theme.green.min.css
+  inflating: hightech-html/css/responsive.css
+  inflating: hightech-html/css/style.css
+   creating: hightech-html/fonts/
+  inflating: hightech-html/fonts/FontAwesome.otf
+  inflating: hightech-html/fonts/fontawesome-webfont.eot
+  inflating: hightech-html/fonts/fontawesome-webfont.svg
+  inflating: hightech-html/fonts/fontawesome-webfont.ttf
+  inflating: hightech-html/fonts/fontawesome-webfont.woff
+  inflating: hightech-html/fonts/fontawesome-webfont.woff2
+  inflating: hightech-html/fonts/IcoMoon-Free.ttf
+  inflating: hightech-html/fonts/Poppins-Black.ttf
+  inflating: hightech-html/fonts/Poppins-BlackItalic.ttf
+  inflating: hightech-html/fonts/Poppins-Bold.ttf
+  inflating: hightech-html/fonts/Poppins-BoldItalic.ttf
+  inflating: hightech-html/fonts/Poppins-ExtraBold.ttf
+  inflating: hightech-html/fonts/Poppins-ExtraBoldItalic.ttf
+  inflating: hightech-html/fonts/Poppins-ExtraLight.ttf
+  inflating: hightech-html/fonts/Poppins-ExtraLightItalic.ttf
+  inflating: hightech-html/fonts/Poppins-Italic.ttf
+  inflating: hightech-html/fonts/Poppins-Light.ttf
+  inflating: hightech-html/fonts/Poppins-LightItalic.ttf
+  inflating: hightech-html/fonts/Poppins-Medium.ttf
+  inflating: hightech-html/fonts/Poppins-MediumItalic.ttf
+  inflating: hightech-html/fonts/Poppins-Regular.ttf
+  inflating: hightech-html/fonts/Poppins-SemiBold.ttf
+  inflating: hightech-html/fonts/Poppins-SemiBoldItalic.ttf
+  inflating: hightech-html/fonts/Poppins-Thin.ttf
+  inflating: hightech-html/fonts/Poppins-ThinItalic.ttf
+   creating: hightech-html/icon/
+   creating: hightech-html/images/
+  inflating: hightech-html/images/.DS_Store
+  inflating: hightech-html/images/about_bg.jpg
+  inflating: hightech-html/images/banner.jpg
+  inflating: hightech-html/images/chose1.png
+  inflating: hightech-html/images/chose2.png
+  inflating: hightech-html/images/chose3.png
+  inflating: hightech-html/images/clint.jpg
+  inflating: hightech-html/images/icon.png
+  inflating: hightech-html/images/loading.gif
+  inflating: hightech-html/images/logo.png
+  inflating: hightech-html/images/logo_footer.png
+  inflating: hightech-html/images/menu_btn.png
+  inflating: hightech-html/images/prot1.png
+  inflating: hightech-html/images/prot2.png
+  inflating: hightech-html/images/prot3.png
+  inflating: hightech-html/images/prot4.png
+  inflating: hightech-html/images/we1.png
+  inflating: hightech-html/images/we2.png
+  inflating: hightech-html/images/we3.png
+  inflating: hightech-html/index.html
+   creating: hightech-html/js/
+  inflating: hightech-html/js/.DS_Store
+  inflating: hightech-html/js/bootstrap.bundle.min.js
+  inflating: hightech-html/js/bootstrap.js
+  inflating: hightech-html/js/bootstrap.min.js
+  inflating: hightech-html/js/custom.js
+  inflating: hightech-html/js/jquery.mCustomScrollbar.concat.min.js
+  inflating: hightech-html/js/jquery.min.js
+  inflating: hightech-html/js/jquery-3.0.0.min.js
+  inflating: hightech-html/js/owl.carousel.js
+  inflating: hightech-html/js/owl.carousel.min.js
+  inflating: hightech-html/portfolio.html
+  inflating: hightech-html/we_do.html
+Removing intermediate container 2944c62945e1
+ ---> e5a92584e243
+Step 5/5 : RUN  mv hightech-html/* /usr/share/nginx/html
+ ---> Running in dfd8c12f4685
+Removing intermediate container dfd8c12f4685
+ ---> 29408246afb4
+Successfully built 29408246afb4
+Successfully tagged gbalakrishna/addcopy:v1
