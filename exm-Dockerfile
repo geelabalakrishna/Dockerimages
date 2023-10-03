@@ -1,3 +1,26 @@
+#This is a sample Image 
+FROM ubuntu 
+MAINTAINER demousr@gmail.com 
+
+RUN apt-get update 
+RUN apt-get install –y nginx 
+CMD [“echo”,”Image created”] 
+=====================================================================================
+COPY target/java-web-app.war  /usr/local/tomcat/webapps/java-web-app.war
+
+ADD https://get.jenkins.io/war/2.397/jenkins.war /tmp
+=========================================================================================
+FROM openjdk:11-jdk
+MAINTAINER GFG author
+LABEL env=production
+ENV apparea /data/app
+RUN mkdir -p $apparea
+ADD https://get.jenkins.io/war/2.397/jenkins.war $apparea
+WORKDIR $apparea
+EXPOSE 8080
+CMD ["java","-jar","jenkins.war"]
+
+========================================================================================
 FROM node:14.15.0
 
 # Create app directory
@@ -15,3 +38,31 @@ RUN cp config.template.js config.js
 
 EXPOSE 4000
 CMD [ "npm", "start" ]
+
+
+====================================================================================
+FROM node:14.18.3
+
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# Install app dependencies
+ARG NPM_REGISTRY_TOKEN
+COPY .npmrc /usr/src/app/
+COPY package.json /usr/src/app/
+RUN npm install
+RUN rm -f .npmrc
+
+# Bundle app source
+COPY . /usr/src/app
+
+RUN cp config.template.js config.js
+
+EXPOSE 4000
+CMD [ "npm", "start" ]
+
+docker build -t $REPOSITORY_URL/$NAME_SPACE/$PROJECT_NAME:$CI_COMMIT_SHA --build-arg NPM_REGISTRY_TOKEN=${NPM_REGISTRY_TOKEN} .
+
+
+===================================================================================================================================
