@@ -21,6 +21,33 @@ docker run -d \
   -v nginx-vol:/usr/share/nginx/html \
   nginx:latest
 
+docker run -d \
+  --name devtest \
+  --mount source=myvol2,target=/app \
+  nginx:latest
+
+docker run -d \
+  -it \
+  --name devtest \
+  --mount type=bind,source="$(pwd)"/target,target=/app \
+  nginx:latest
+
+docker run -d \
+  -it \
+  --name devtest \
+  -v "$(pwd)"/target:/app \
+  nginx:latest
+
+
+
+
+
+
+
+
+
+
+
 docker container stop nginxtest
 
 docker container rm nginxtest
