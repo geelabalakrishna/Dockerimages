@@ -58,3 +58,61 @@ docker volume rm nginx-vol
 
 
 
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1001 ubuntu
+USER ubuntu
+WORKDIR /home/ubuntu
+==================================================
+RUN useradd -ms /bin/bash newuser
+
+USER newuser
+WORKDIR /home/newuser
+
+docker run -t -i image
+newuser@131b7ad86360:~$
+============================================
+
+Adding user in docker and running your app under that user is very good practice for security point of view. To do that I would recommend below steps:
+
+FROM node:10-alpine
+
+# Copy source to container
+RUN mkdir -p /usr/app/src
+
+# Copy source code
+COPY src /usr/app/src
+COPY package.json /usr/app
+COPY package-lock.json /usr/app
+
+WORKDIR /usr/app
+
+# Running npm install for production purpose will not run dev dependencies.
+RUN npm install -only=production    
+
+# Create a user group 'xyzgroup'
+RUN addgroup -S xyzgroup
+
+# Create a user 'appuser' under 'xyzgroup'
+RUN adduser -S -D -h /usr/app/src appuser xyzgroup
+
+# Chown all the files to the app user.
+RUN chown -R appuser:xyzgroup /usr/app
+
+# Switch to 'appuser'
+USER appuser
+
+# Open the mapped port
+EXPOSE 3000
+
+# Start the process
+CMD ["npm", "start"]
+
+===========================================================================
+FROM centos:7
+RUN useradd -u 1001 testuser
+USER testuser
+CMD ["/bin/sleep", "200"]
+==============================
+RUN useradd -ms /bin/bash toto_user
+USER toto_user
+======================================
+
