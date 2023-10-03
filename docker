@@ -1,0 +1,33 @@
+Create and manage volumes
+docker volume create my-vol
+docker volume ls
+docker volume inspect my-vol
+docker volume rm my-vol
+docker run -d \
+  --name devtest \
+  -v myvol2:/app \
+  nginx:latest
+
+docker inspect devtest
+docker container stop devtest
+
+docker container rm devtest
+
+docker volume rm myvol2
+
+
+docker run -d \
+  --name=nginxtest \
+  -v nginx-vol:/usr/share/nginx/html \
+  nginx:latest
+
+docker container stop nginxtest
+
+docker container rm nginxtest
+
+docker volume rm nginx-vol
+
+
+
+
+
